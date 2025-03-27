@@ -15,4 +15,19 @@ public class SelfProductService implements ProductService {
     public List<Product> getAllProducts() {
         return List.of();
     }
+
+    @Override
+    public void deleteProduct(Long productId) {
+
+    }
+
+    @Override
+    public Product updateProduct(Long productId, Product product) {
+        return null;
+    }
+
+    @Override
+    public Product replaceProduct(Long productId, Product product) {
+        return null;
+    }
 }
