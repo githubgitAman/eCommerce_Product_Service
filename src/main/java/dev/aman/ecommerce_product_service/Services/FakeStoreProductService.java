@@ -7,6 +7,7 @@ import dev.aman.ecommerce_product_service.Models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,7 +28,17 @@ public class FakeStoreProductService implements ProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return List.of();
+
+        //List<FakeStoreProductDTOs> listOfFakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products", List<FakeStoreProductDTOs>.class);
+        //Here because of Type Erasure we cannot store it in FakeStoreProductDTOs list as at run time everything is type object
+        //so we are using arrays as they are free from Generics
+        FakeStoreProductDTOs[] listOfFakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products", FakeStoreProductDTOs[].class);
+        //Converting array of fakeStoreProductDtos to Product list
+        List<Product> products = new ArrayList<>();
+        for(FakeStoreProductDTOs fakeStoreProductDtos : listOfFakeStoreProductDto){
+            products.add(convertDTOsToProduct(fakeStoreProductDtos));
+        }
+        return products;
     }
 
     //Converting DTOs to Product
