@@ -1,7 +1,10 @@
 package dev.aman.ecommerce_product_service.Controllers;
 
+import dev.aman.ecommerce_product_service.Exceptions.ProductNotFoundException;
 import dev.aman.ecommerce_product_service.Models.Product;
 import dev.aman.ecommerce_product_service.Services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,24 +20,39 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable("id") Long id){
-        return productService.getProduct(id);
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
+        ResponseEntity<Product> response = new ResponseEntity<>(
+         productService.getProduct(id),
+                HttpStatus.OK);
+        return response;
     }
     @GetMapping
-    public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts(){
+        ResponseEntity<List<Product>> response = new ResponseEntity<>(
+                productService.getAllProducts(),
+                HttpStatus.OK
+        );
+        return response;
     }
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable("id") Long id){
 
     }
     @PutMapping("/{id}")
-    public Product replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){
-        return null;
+    public ResponseEntity<Product> replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){
+        ResponseEntity<Product> response = new ResponseEntity<>(
+                productService.replaceProduct(id, product),
+                HttpStatus.OK
+        );
+        return response;
     }
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
-        return null;
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
+        ResponseEntity<Product> reponse = new ResponseEntity<>(
+                productService.updateProduct(id, product),
+                HttpStatus.OK
+        );
+        return reponse;
     }
 
 }

@@ -1,5 +1,6 @@
 package dev.aman.ecommerce_product_service.Services;
 
+import dev.aman.ecommerce_product_service.Exceptions.ProductNotFoundException;
 import dev.aman.ecommerce_product_service.Models.Product;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 public class SelfProductService implements ProductService {
 
     @Override
-    public Product getProduct(Long id) {
+    public Product getProduct(Long id) throws ProductNotFoundException {
         return null;
     }
 

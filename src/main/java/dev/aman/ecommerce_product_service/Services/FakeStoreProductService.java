@@ -1,7 +1,7 @@
 package dev.aman.ecommerce_product_service.Services;
 
-import dev.aman.ecommerce_product_service.Confriguations.RestTemplateConfigurations;
 import dev.aman.ecommerce_product_service.DTOs.FakeStoreProductDTOs;
+import dev.aman.ecommerce_product_service.Exceptions.ProductNotFoundException;
 import dev.aman.ecommerce_product_service.Models.Category;
 import dev.aman.ecommerce_product_service.Models.Product;
 import org.springframework.http.HttpMethod;
@@ -22,11 +22,13 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public Product getProduct(Long productId) {
+    public Product getProduct(Long productId) throws ProductNotFoundException {
         //Calling FakeStore to get product with given Id
         //Storing returned data into DTOs classes
         FakeStoreProductDTOs fakeStoreProductDtos = restTemplate.getForObject
                 ("https://fakestoreapi.com/products/" + productId, FakeStoreProductDTOs.class);
+        if(fakeStoreProductDtos == null)
+            throw new ProductNotFoundException("Product Not Found, please enter a valid product Id");
         return convertDTOsToProduct(fakeStoreProductDtos);
     }
 
@@ -82,5 +84,4 @@ public class FakeStoreProductService implements ProductService{
         product.setCategory(category);
         return product;
     }
-
 }
