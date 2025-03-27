@@ -1,8 +1,7 @@
 package dev.aman.ecommerce_product_service.Controllers;
 
-import dev.aman.ecommerce_product_service.Models.Products;
+import dev.aman.ecommerce_product_service.Models.Product;
 import dev.aman.ecommerce_product_service.Services.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +20,10 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Products getProduct(@PathVariable("id") Long id){
-        return null;
+    public Product getProductById(@PathVariable("id") Long id){
+        return productService.getProduct(id);
     }
-    public List<Products> getAllProducts(){
+    public List<Product> getAllProducts(){
         return null;
     }
 }

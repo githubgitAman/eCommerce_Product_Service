@@ -1,11 +1,11 @@
 package dev.aman.ecommerce_product_service.Services;
 
-import dev.aman.ecommerce_product_service.Models.Products;
+import dev.aman.ecommerce_product_service.Models.Product;
 
 import java.util.List;
 
 public interface ProductService {
 
-    Products getProduct(Long id);
-    List<Products> getAllProducts();
+    Product getProduct(Long id);
+    List<Product> getAllProducts();
 }

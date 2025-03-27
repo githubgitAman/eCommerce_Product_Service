@@ -1,19 +1,47 @@
 package dev.aman.ecommerce_product_service.Services;
 
-import dev.aman.ecommerce_product_service.Models.Products;
+import dev.aman.ecommerce_product_service.Confriguations.RestTemplateConfigurations;
+import dev.aman.ecommerce_product_service.DTOs.FakeStoreProductDTOs;
+import dev.aman.ecommerce_product_service.Models.Category;
+import dev.aman.ecommerce_product_service.Models.Product;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 @Service
 public class FakeStoreProductService implements ProductService{
-    @Override
-    public Products getProduct(Long id) {
-        return null;
+
+    private RestTemplate restTemplate;
+    public FakeStoreProductService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     @Override
-    public List<Products> getAllProducts() {
+    public Product getProduct(Long id) {
+        //Storing returned data into DTOs classes
+        FakeStoreProductDTOs fakeStoreProductDtos = restTemplate.getForObject
+                ("https://fakestoreapi.com/products/" + id, FakeStoreProductDTOs.class);
+        return convertDTOsToProduct(fakeStoreProductDtos);
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
         return List.of();
     }
+
+    //Converting DTOs to Product
+    private Product convertDTOsToProduct(FakeStoreProductDTOs fakeStoreProductDTOs) {
+        Product product = new Product();
+        product.setId(fakeStoreProductDTOs.getId());
+        product.setTitle(fakeStoreProductDTOs.getTitle());
+        product.setDescription(fakeStoreProductDTOs.getDescription());
+        product.setPrice(fakeStoreProductDTOs.getPrice());
+        //In our class Category is a class whereas in FakeStore it is String
+        Category category = new Category();
+        category.setDescription(fakeStoreProductDTOs.getCategory());
+        product.setCategory(category);
+        return product;
+    }
+
 }
