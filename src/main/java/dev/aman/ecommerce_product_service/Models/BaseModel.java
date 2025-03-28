@@ -1,8 +1,20 @@
 package dev.aman.ecommerce_product_service.Models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+
 import java.util.Date;
+
+//We are not creating table for Parent class so need to mark with Mapped Super Class annotation
+@MappedSuperclass
 public class BaseModel {
 
+    //Mark our Primary Key
+    @Id
+    //Below annotation will auto increment our Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private Date createdAt;
     private Date updatedAt;

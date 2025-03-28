@@ -1,10 +1,16 @@
 package dev.aman.ecommerce_product_service.Models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+
+//Hibernate bydefault creates table with same name as that of Class
+@Entity
 public class Product extends BaseModel {
 
     private String title;
     private double price;
     private String description;
+    @ManyToOne
     private Category category;
     private String imageUrl;
 

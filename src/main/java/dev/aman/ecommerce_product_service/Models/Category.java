@@ -1,5 +1,8 @@
 package dev.aman.ecommerce_product_service.Models;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Category extends BaseModel {
 
     private String name;
