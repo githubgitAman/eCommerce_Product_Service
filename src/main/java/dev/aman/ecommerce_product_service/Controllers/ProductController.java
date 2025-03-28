@@ -35,8 +35,8 @@ public class ProductController {
         return response;
     }
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") Long id){
-
+    public void deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException{
+        productService.deleteProduct(id);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Product> replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){

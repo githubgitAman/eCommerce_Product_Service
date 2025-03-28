@@ -48,8 +48,12 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public void deleteProduct(Long productId) {
-
+    public void deleteProduct(Long productId) throws ProductNotFoundException {
+        FakeStoreProductDTOs fakeStoreProductDtos = restTemplate.getForObject("https://fakestoreapi.com/products/" + productId, FakeStoreProductDTOs.class);
+        if(fakeStoreProductDtos == null)
+            throw new ProductNotFoundException("Product with given Id not found, please enter correct details");
+        restTemplate.delete("https://fakestoreapi.com/products/" +  productId);
+        System.out.println("Product with id " + productId + " deleted successfully");
     }
 
     @Override
