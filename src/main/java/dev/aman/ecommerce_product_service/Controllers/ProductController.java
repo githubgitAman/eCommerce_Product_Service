@@ -40,7 +40,7 @@ public class ProductController {
         return new ResponseEntity<>("Product deleted successfully!", HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Product> replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){
+    public ResponseEntity<Product> replaceProduct(@PathVariable("id") Long id, @RequestBody Product product) throws ProductNotFoundException{
         ResponseEntity<Product> response = new ResponseEntity<>(
                 productService.replaceProduct(id, product),
                 HttpStatus.OK
@@ -48,7 +48,7 @@ public class ProductController {
         return response;
     }
     @PatchMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
+    public ResponseEntity<Product> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) throws ProductNotFoundException {
         ResponseEntity<Product> reponse = new ResponseEntity<>(
                 productService.updateProduct(id, product),
                 HttpStatus.OK
