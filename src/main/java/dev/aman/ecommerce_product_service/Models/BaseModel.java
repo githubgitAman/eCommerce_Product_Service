@@ -15,7 +15,7 @@ public class BaseModel {
     @Id
     //Below annotation will auto increment our Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private Date createdAt;
     private Date updatedAt;
 

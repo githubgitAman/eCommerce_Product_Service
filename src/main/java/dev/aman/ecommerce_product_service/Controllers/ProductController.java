@@ -35,8 +35,9 @@ public class ProductController {
         return response;
     }
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException{
+    public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException{
         productService.deleteProduct(id);
+        return new ResponseEntity<>("Product deleted successfully!", HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Product> replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){
@@ -53,6 +54,14 @@ public class ProductController {
                 HttpStatus.OK
         );
         return reponse;
+    }
+    @PostMapping
+    public ResponseEntity<Product> addProduct(@RequestBody Product product){
+        ResponseEntity<Product> response = new ResponseEntity<>(
+                productService.addProduct(product),
+                HttpStatus.CREATED
+        );
+        return response;
     }
 
 }

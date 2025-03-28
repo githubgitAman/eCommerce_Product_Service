@@ -20,7 +20,6 @@ public class FakeStoreProductService implements ProductService{
     public FakeStoreProductService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
-
     @Override
     public Product getProduct(Long productId) throws ProductNotFoundException {
         //Calling FakeStore to get product with given Id
@@ -31,7 +30,6 @@ public class FakeStoreProductService implements ProductService{
             throw new ProductNotFoundException("Product Not Found, please enter a valid product Id");
         return convertDTOsToProduct(fakeStoreProductDtos);
     }
-
     @Override
     public List<Product> getAllProducts() {
 
@@ -76,6 +74,7 @@ public class FakeStoreProductService implements ProductService{
     }
 
     //Converting DTOs to Product
+
     private Product convertDTOsToProduct(FakeStoreProductDTOs fakeStoreProductDTOs) {
         Product product = new Product();
         product.setId(fakeStoreProductDTOs.getId());
@@ -87,5 +86,9 @@ public class FakeStoreProductService implements ProductService{
         category.setDescription(fakeStoreProductDTOs.getCategory());
         product.setCategory(category);
         return product;
+    }
+    @Override
+    public Product addProduct(Product product) {
+        return null;
     }
 }
