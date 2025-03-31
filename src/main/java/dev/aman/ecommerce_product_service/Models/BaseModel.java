@@ -5,11 +5,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
+import java.io.Serializable;
 import java.util.Date;
 
 //We are not creating table for Parent class so need to mark with Mapped Super Class annotation
+//Serializable for Redis
 @MappedSuperclass
-public class BaseModel {
+public class BaseModel implements Serializable {
 
     //Mark our Primary Key
     @Id
