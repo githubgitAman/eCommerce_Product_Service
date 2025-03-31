@@ -4,6 +4,8 @@ import dev.aman.ecommerce_product_service.DTOs.FakeStoreProductDTOs;
 import dev.aman.ecommerce_product_service.Exceptions.ProductNotFoundException;
 import dev.aman.ecommerce_product_service.Models.Category;
 import dev.aman.ecommerce_product_service.Models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
@@ -31,7 +33,7 @@ public class FakeStoreProductService implements ProductService{
         return convertDTOsToProduct(fakeStoreProductDtos);
     }
     @Override
-    public List<Product> getAllProducts() {
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
 
         //List<FakeStoreProductDTOs> listOfFakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products", List<FakeStoreProductDTOs>.class);
         //Here because of Type Erasure we cannot store it in FakeStoreProductDTOs list as at run time everything is type object
@@ -42,7 +44,7 @@ public class FakeStoreProductService implements ProductService{
         for(FakeStoreProductDTOs fakeStoreProductDtos : listOfFakeStoreProductDto){
             products.add(convertDTOsToProduct(fakeStoreProductDtos));
         }
-        return products;
+        return new PageImpl<>(products);
     }
 
     @Override

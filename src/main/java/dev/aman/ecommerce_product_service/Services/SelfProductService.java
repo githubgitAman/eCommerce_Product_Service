@@ -6,6 +6,8 @@ import dev.aman.ecommerce_product_service.Models.Product;
 import dev.aman.ecommerce_product_service.Repository.CategoryRepository;
 import dev.aman.ecommerce_product_service.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,8 +45,11 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
+        //Using PageRequest class that implements Page Interface
+        return productRepository.findAll(
+                PageRequest.of(pageNumber, pageSize)
+        );
     }
 
     @Override

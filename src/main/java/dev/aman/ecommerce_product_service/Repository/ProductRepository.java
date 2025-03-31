@@ -2,11 +2,12 @@ package dev.aman.ecommerce_product_service.Repository;
 
 import dev.aman.ecommerce_product_service.Models.Product;
 import dev.aman.ecommerce_product_service.Projections.ProductWithGivenIdAndTitle;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,7 +16,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //Save method is default so no need to create externally
     Optional<Product> findById(long id);
-    List<Product> findAll();
+    Page<Product> findAll(Pageable pageable);
     void deleteById(long id);
 
     //Implementing HQL queries

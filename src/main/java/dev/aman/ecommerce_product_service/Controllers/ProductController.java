@@ -4,6 +4,7 @@ import dev.aman.ecommerce_product_service.Exceptions.ProductNotFoundException;
 import dev.aman.ecommerce_product_service.Models.Product;
 import dev.aman.ecommerce_product_service.Services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +28,11 @@ public class ProductController {
         return response;
     }
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts(){
-        ResponseEntity<List<Product>> response = new ResponseEntity<>(
-                productService.getAllProducts(),
-                HttpStatus.OK
-        );
-        return response;
+    public ResponseEntity<List<Product>> getAllProducts(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize) throws ProductNotFoundException {
+       //Converting Page of products into List of products using getContent method
+        Page<Product> products = productService.getAllProducts(pageNumber, pageSize);
+       List<Product> productList = products.getContent();
+       return new ResponseEntity<>(productList, HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable("id") Long id) throws ProductNotFoundException{
