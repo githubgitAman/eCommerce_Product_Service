@@ -1,5 +1,7 @@
 package dev.aman.ecommerce_product_service.Controllers;
 
+import dev.aman.ecommerce_product_service.AuthCommons.AuthenticatingToken;
+import dev.aman.ecommerce_product_service.DTOs.UserDTOs;
 import dev.aman.ecommerce_product_service.Exceptions.ProductNotFoundException;
 import dev.aman.ecommerce_product_service.Models.Product;
 import dev.aman.ecommerce_product_service.Services.ProductService;
@@ -16,12 +18,19 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
-    public ProductController(@Qualifier("FakeStoreProductService") ProductService productService) {
+    private AuthenticatingToken authenticatingToken;
+    public ProductController(@Qualifier("SelfProductService") ProductService productService) {
         this.productService = productService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
+    //Passing RequestHeader i.e token for validation
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id, @RequestHeader String authenticationToken) throws ProductNotFoundException {
+
+        UserDTOs userDtos = authenticatingToken.validateToken(authenticationToken);
+        if(userDtos == null)
+            throw new ProductNotFoundException("User Not Found");
+
         ResponseEntity<Product> response = new ResponseEntity<>(
          productService.getProduct(id),
                 HttpStatus.OK);
