@@ -15,9 +15,9 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //Save method is default so no need to create externally
-    Optional<Product> findById(long id);
+    Optional<Product> findById(Long id);
     Page<Product> findAll(Pageable pageable);
-    void deleteById(long id);
+    void deleteById(Long id);
 
     //Implementing HQL queries
     @Query("select p.id as id , p.title as title from Product p where p.id = : x")
